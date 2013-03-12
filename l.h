@@ -1,8 +1,8 @@
 #ifndef L_H
 #define L_H
-#include "shape.h"
+#include "lattice.h"
 
-class L : public Shape
+class L : public Lattice
 {
 public:
     L();

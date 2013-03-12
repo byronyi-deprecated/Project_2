@@ -1,11 +1,12 @@
 #ifndef Z_H
 #define Z_H
-#include "shape.h"
+#include "lattice.h"
 
-class Z : public Shape
+class Z : public Lattice
 {
 public:
-    Z();
+    Z(size_t width, size_t height);
+    Lattice rotate();
 };
 
 #endif // Z_H

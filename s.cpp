@@ -1,5 +1,10 @@
 #include "s.h"
 
-S::S() : Shape()
+S::S(size_t width, size_t height) : Lattice(width, height)
 {
+}
+
+Lattice S::rotate()
+{
+
 }

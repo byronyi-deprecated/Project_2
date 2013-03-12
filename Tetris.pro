@@ -15,7 +15,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     lattice.cpp \
-    shape.cpp \
     i.cpp \
     j.cpp \
     l.cpp \
@@ -26,7 +25,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     lattice.h \
-    shape.h \
     i.h \
     j.h \
     l.h \

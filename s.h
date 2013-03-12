@@ -1,11 +1,11 @@
 #ifndef S_H
 #define S_H
-#include "shape.h"
+#include "lattice.h"
 
-class S : public Shape
+class S : public Lattice
 {
 public:
-    S();
+    S(size_t width, size_t height);
 };
 
 #endif // S_H

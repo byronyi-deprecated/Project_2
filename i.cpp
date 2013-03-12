@@ -1,7 +1,7 @@
 #include "i.h"
 
 I::I(size_t width, size_t height) :
-    Shape(width, height)
+    Lattice(width, height)
 {
     lattice->set(0, 3);
     lattice->set(0, 4);
@@ -9,6 +9,7 @@ I::I(size_t width, size_t height) :
     lattice->set(0, 6);
 }
 
-bool I::moveDown(Lattice *baseLattice)
+Lattice I::rotate()
 {
+
 }

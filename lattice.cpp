@@ -1,5 +1,15 @@
 #include "lattice.h"
 
+//==============================================
+//Constructor and Destructor:
+//Two constructor are provided:
+//copy constructor and initializtion constuctor
+//Please note that all the constructors need at
+//least one argument. Since the 2D bool array is
+//dynamic allocated, the user have to provide the
+//geometry of the matrix.
+//===============================================
+
 Lattice::Lattice(const Lattice &l)
 {
     width = l.width;
@@ -21,6 +31,21 @@ Lattice::~Lattice()
 {
     delete [] lattice;
 }
+
+//================================================
+//Two operators are provided:
+//assignment and addition
+//
+//The assignment operator will destroy the left
+//variable and then copy the right operand to
+//the left one in spite of any geometry difference
+//between its two operands.
+//
+//The addition operator basically do bitwise
+//OR between each entry of two matrix. It will
+//return a error message if its two operands
+//have different geometry.
+//=================================================
 
 Lattice& Lattice::operator=(const Lattice &l)
 {
@@ -45,7 +70,32 @@ Lattice Lattice::operator+(const Lattice &l)
     return *this;
 }
 
-void Lattice::set(const size_t& nth_row, const size_t& nth_col)
+bool Lattice::isHit(Lattice* const &a)
+{
+    if(a->width != this->width || a->height != this->height)
+    {
+        std::cerr << "Lattices with different size cannot hit" << std::endl;
+        return true;
+    }
+
+    for(size_t i = 0; i != width * height; ++i)
+        if(a->lattice[i] * this->lattice[i])
+            return true;
+    return false;
+}
+
+//=============================================
+//protected methods:
+//set is to set the given entry to 1 reset is to
+//set the given entry to 0 moveDown, moveLeft,
+//moveRight return a Lattice that move the
+//"1-entry" in origin lattice to given direction
+//elimNthRow eliminate the given row, and all
+//"1-entry" above that row fall down 1 row
+//==============================================
+
+void Lattice::set(const size_t& nth_row,
+                  const size_t& nth_col)
 {
     if(nth_row < height && nth_col < width)
         lattice[nth_row * width + nth_col] = true;
@@ -59,20 +109,6 @@ void Lattice::reset(const size_t& nth_row, const size_t& nth_col)
         lattice[nth_row * width + nth_col] = false;
     else
         std::cerr << "Given entry is out of range" << std::endl;
-}
-
-bool Lattice::hit(Lattice* const &a)
-{
-    if(a->width != this->width || a->height != this->height)
-    {
-        std::cerr << "Lattices with different size cannot hit" << std::endl;
-        return true;
-    }
-
-    for(size_t i = 0; i != width * height; ++i)
-        if(a->lattice[i] * this->lattice[i])
-            return true;
-    return false;
 }
 
 Lattice Lattice::moveDown()
