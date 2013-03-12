@@ -5,7 +5,7 @@
 class Shape
 {
 public:
-    Shape();
+    Shape(size_t width, size_t height);
     ~Shape();
     virtual bool moveLeft(Lattice* baseLattice) = 0;
     virtual bool moveRight(Lattice* baseLattice) = 0;
