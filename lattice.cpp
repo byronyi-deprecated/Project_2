@@ -48,7 +48,7 @@ Lattice Lattice::operator+(const Lattice &l)
 void Lattice::set(const size_t& nth_row, const size_t& nth_col)
 {
     if(nth_row < height && nth_col < width)
-        lattice[nth_row * widht + nth_col] = true;
+        lattice[nth_row * width + nth_col] = true;
     else
         std::cerr << "Given entry is out of range" << std::endl;
 }
@@ -56,7 +56,7 @@ void Lattice::set(const size_t& nth_row, const size_t& nth_col)
 void Lattice::reset(const size_t& nth_row, const size_t& nth_col)
 {
     if(nth_row < height && nth_col < height)
-        lattice[nth_row * widht + nth_col] = false;
+        lattice[nth_row * width + nth_col] = false;
     else
         std::cerr << "Given entry is out of range" << std::endl;
 }
@@ -75,6 +75,56 @@ bool Lattice::hit(Lattice* const &a)
     return false;
 }
 
+Lattice Lattice::moveDown()
+{
+    for(size_t i = 0; i != width; ++i)
+        if(lattice[ (height - 1) * width + i ])
+            return *this;
+
+    Lattice temp(*this);
+    for(size_t i = height - 1; i != 0; --i)
+        for(size_t j = 0; j != width; ++j)
+            temp.lattice[i * width + j] = temp.lattice[(i-1) * width + j];
+
+    for(size_t i = 0; i < width; ++i)
+        temp.lattice[i] = false;
+
+    return temp;
+}
+
+Lattice Lattice::moveLeft()
+{
+    for(size_t i = 0; i != height; ++i)
+        if(lattice[i * width])
+            return *this;
+
+    Lattice temp(*this);
+    for(size_t i = 0; i != width - 1; ++i)
+        for(size_t j = 0; j != height; ++j)
+            temp.lattice[j * width + i] = temp.lattice[j * width + (i + 1)];
+
+    for(size_t i = 1; i != height; ++i)
+        temp.lattice[i * width - 1] = false;
+
+    return temp;
+}
+
+Lattice Lattice::moveRight()
+{
+    for(size_t i = 1; i != height; ++i)
+        if(lattice[i * width - 1])
+            return *this;
+
+    Lattice temp(*this);
+    for(size_t i = width - 1; i != 0; --i)
+        for(size_t j = 0; j != height; ++j)
+            temp.lattice[j * width + i] = temp.lattice[j * width + i - 1];
+
+    for(size_t i = 0; i != height; ++i)
+        temp.lattice[i * width + 1] = false;
+
+    return temp;
+}
 
 void Lattice::elimNthRow(size_t nth_row)
 {

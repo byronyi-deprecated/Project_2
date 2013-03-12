@@ -20,6 +20,9 @@ public:
     void reset(const size_t& nth_row, const size_t& nth_col);
 
     bool hit(Lattice* const &a);
+    Lattice moveDown();
+    Lattice moveLeft();
+    Lattice moveRight();
     void elimNthRow(size_t nth_row);
 private:
     bool *lattice;
