@@ -1,11 +1,12 @@
 #ifndef O_H
 #define O_H
-#include "shape.h"
+#include "lattice.h"
 
-class O : public Shape
+class O : public Lattice
 {
 public:
-    O();
+    O(size_t width, size_t height);
+    Lattice rotate();
 };
 
 #endif // O_H

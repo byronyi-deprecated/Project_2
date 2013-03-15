@@ -1,6 +1,7 @@
 #ifndef I_H
 #define I_H
 #include "lattice.h"
+#include <QColor>
 
 class I : public Lattice
 {

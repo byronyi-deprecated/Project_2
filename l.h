@@ -5,7 +5,8 @@
 class L : public Lattice
 {
 public:
-    L();
+    L(size_t width, size_t height);
+    Lattice rotate();
 };
 
 #endif // L_H

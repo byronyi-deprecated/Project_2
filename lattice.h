@@ -24,7 +24,7 @@ protected:
     Lattice moveDown();
     Lattice moveLeft();
     Lattice moveRight();
-    virtual Lattice rotate() = 0;
+    virtual Lattice rotate() {return *this;}
     void elimNthRow(size_t nth_row);
 private:
     bool *lattice;
