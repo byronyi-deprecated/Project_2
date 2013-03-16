@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,13 +17,14 @@ MainWindow::MainWindow(QWidget *parent)
             timer, SLOT(stop()));
 
     board = QImage(10, 20, QImage::Format_ARGB32);
-    board.fill(Qt::transparent);
+    board.fill(Qt::white);
     background.load(":\background.bmp");
 
-    gameBoard = new QWidget(this);
-    previewWin = new QWidget(this);
-    gameBoard->setGeometry(10, 10, 100, 200);
-    previewWin->setGeometry(150, 200, 20, 40);
+    gameBoard = QRect(10, 10, 200, 400);
+    previewWin = QRect(250, 200, 80, 120);
+
+    setMinimumSize(360, 420);
+    setMaximumSize(360, 420);
 }
 
 MainWindow::~MainWindow()
@@ -76,11 +78,9 @@ void MainWindow::timerEvent(QTimerEvent *e)
 
 void MainWindow::paintEvent(QPaintEvent *e)
 {
-    QPainter painter;
-
-    painter.begin(gameBoard);
-    painter.drawPixmap(gameBoard->geometry(), background);
-    painter.drawImage(gameBoard->geometry(), board);
+    QPainter painter(this);
+    painter.drawPixmap(gameBoard, background);
+    painter.drawImage(gameBoard, board);
 }
 
 void MainWindow::nextRound()

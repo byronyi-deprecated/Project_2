@@ -46,8 +46,8 @@ private:
     QTimer *timer;
     QPixmap background;
     QImage board;
-    QWidget *gameBoard;
-    QWidget *previewWin;
+    QRect gameBoard;
+    QRect previewWin;
     unsigned int score;
 };
 
