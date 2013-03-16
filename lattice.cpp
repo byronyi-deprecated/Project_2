@@ -70,16 +70,31 @@ Lattice Lattice::operator+(const Lattice &l)
     return *this;
 }
 
-bool Lattice::isHit(Lattice* const &a)
+bool Lattice::operator ==(const Lattice &l)
 {
-    if(a->width != this->width || a->height != this->height)
+    if(l.width != this->width || l.height != this->height)
+        return false;
+    for(size_t i = 0; i != width * height; ++i)
+        if(lattice[i] != l.lattice[i])
+            return false;
+    return true;
+}
+
+bool Lattice::operator !=(const Lattice &l)
+{
+    return !((*this) == l);
+}
+
+bool Lattice::isHit(Lattice* const &l)
+{
+    if(l->width != this->width || l->height != this->height)
     {
         std::cerr << "Lattices with different size cannot hit" << std::endl;
         return true;
     }
 
     for(size_t i = 0; i != width * height; ++i)
-        if(a->lattice[i] * this->lattice[i])
+        if(l->lattice[i] * this->lattice[i])
             return true;
     return false;
 }

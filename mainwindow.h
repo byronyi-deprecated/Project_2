@@ -4,8 +4,15 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QPainter>
-#include <QIamge>
+#include <QKeyEvent>
 #include "lattice.h"
+#include "i.h"
+#include "j.h"
+#include "l.h"
+#include "o.h"
+#include "s.h"
+#include "t.h"
+#include "z.h"
 
 class MainWindow : public QMainWindow
 {
@@ -18,6 +25,12 @@ public:
     void keyPressEvent(QKeyEvent *);
     void paintEvent(QPaintEvent *);
     void timerEvent(QTimerEvent *);
+signals:
+    void gameStart();
+    void hitGround();
+    void gameOver();
+private slots:
+    void nextRound();
 private:
 
     I *i;
@@ -29,12 +42,12 @@ private:
     Z *z;
 
     Lattice *base;
-    Lattice *currectShape;
-    QTimer timer;
+    Lattice *currentShape;
+    QTimer *timer;
     QPixmap background;
     QImage board;
-    QWidget gameBoard;
-    QWidget previewWin;
+    QWidget *gameBoard;
+    QWidget *previewWin;
     unsigned int score;
 };
 
