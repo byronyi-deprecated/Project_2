@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     background.load(":\background.bmp");
 
     gameBoard = QRect(10, 10, 200, 400);
-    previewWin = QRect(250, 200, 80, 120);
+    previewWin = QRect(240, 80, 100, 180);
 
     setMinimumSize(360, 420);
     setMaximumSize(360, 420);
@@ -81,6 +81,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     QPainter painter(this);
     painter.drawPixmap(gameBoard, background);
     painter.drawImage(gameBoard, board);
+    painter.fillRect(previewWin, QBrush(Qt::white));
 }
 
 void MainWindow::nextRound()

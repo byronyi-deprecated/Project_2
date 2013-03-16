@@ -43,6 +43,7 @@ private:
 
     Lattice *base;
     Lattice *currentShape;
+    Lattice *nextShape;
     QTimer *timer;
     QPixmap background;
     QImage board;
