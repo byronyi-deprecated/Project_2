@@ -6,11 +6,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     base = new Lattice(10, 20);
     timer = new QTimer(this);
-    timer->setInterval(1000);
+    timer->setInterval(100);
     connect(this, SIGNAL(gameStart()),
             timer, SLOT(start()));
-    connect(this, SIGNAL(gameStart()),
-            this, SLOT(nextRound()));
+//    connect(this, SIGNAL(gameStart()),
+//            this, SLOT(startNewGame()));
     connect(this, SIGNAL(hitGround()),
             this, SLOT(nextRound()));
     connect(this, SIGNAL(gameOver()),
@@ -29,11 +29,23 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    
+//    if(currentShape)
+//        delete currentShape;
+//    if(nextShape)
+//        delete nextShape;
+    delete base;
+    delete timer;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    if(!currentShape)
+    {
+        if(e->key() == Qt::Key_Up)
+            emit gameStart();
+        return;
+    }
+
     switch(e->key()) {
     case Qt::Key_Up:
         emit gameStart();
@@ -76,15 +88,67 @@ void MainWindow::timerEvent(QTimerEvent *e)
     update();
 }
 
-void MainWindow::paintEvent(QPaintEvent *e)
+void MainWindow::paintEvent(QPaintEvent * /* e */)
 {
+    temp = board;
+//    if(currentShape)
+//        currentShape->paintOnImage(temp);
+
     QPainter painter(this);
     painter.drawPixmap(gameBoard, background);
-    painter.drawImage(gameBoard, board);
+    painter.drawImage(gameBoard, temp);
+
     painter.fillRect(previewWin, QBrush(Qt::white));
+}
+
+void MainWindow::startNewGame()
+{
+    board.fill(Qt::white);
+    if(currentShape)
+        delete currentShape;
+    if(nextShape)
+        delete nextShape;
+    currentShape = newShape();
+    nextShape = newShape();
+    update();
 }
 
 void MainWindow::nextRound()
 {
+    currentShape->paintOnImage(board);
+    delete currentShape;
 
+    currentShape = nextShape;
+    nextShape = newShape();
+}
+
+Lattice* MainWindow::newShape()
+{
+    Lattice *newShape;
+    switch(qrand() % 7){
+    case 0:
+        newShape = new I(10, 20);
+        break;
+    case 1:
+        newShape = new J(10, 20);
+        break;
+    case 2:
+        newShape = new L(10, 20);
+        break;
+    case 3:
+        newShape = new O(10, 20);
+        break;
+    case 4:
+        newShape = new S(10, 20);
+        break;
+    case 5:
+        newShape = new T(10, 20);
+        break;
+    case 6:
+        newShape = new Z(10, 20);
+        break;
+    default:
+        break;
+    }
+    return newShape;
 }

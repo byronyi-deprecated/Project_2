@@ -30,22 +30,16 @@ signals:
     void hitGround();
     void gameOver();
 private slots:
+    void startNewGame();
     void nextRound();
+    Lattice* newShape();
 private:
-
-    I *i;
-    J *j;
-    L *l;
-    O *o;
-    S *s;
-    T *t;
-    Z *z;
-
-    Lattice *base;
-    Lattice *currentShape;
-    Lattice *nextShape;
-    QTimer *timer;
+    Lattice* base;
+    Lattice* currentShape;
+    Lattice* nextShape;
+    QTimer* timer;
     QPixmap background;
+    QImage temp;
     QImage board;
     QRect gameBoard;
     QRect previewWin;

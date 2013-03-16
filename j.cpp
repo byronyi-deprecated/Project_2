@@ -8,7 +8,7 @@ J::J(size_t width, size_t height) : Lattice(width, height)
     set(1, 6);
 }
 
-Lattice J::rotate()
+Lattice& J::rotate()
 {
 
 }

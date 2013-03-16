@@ -7,9 +7,8 @@ class I : public Lattice
 {
 public:
     I(size_t width, size_t height);
-    Lattice rotate();
+    Lattice& rotate();
 private:
-    QRgb color;
 };
 
 #endif // I_H
