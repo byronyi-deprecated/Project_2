@@ -24,8 +24,11 @@ protected:
     Lattice moveDown();
     Lattice moveLeft();
     Lattice moveRight();
-    virtual Lattice rotate() {return *this;}
+    virtual Lattice rotate();
     void elimNthRow(size_t nth_row);
+    //coordinate of the shape center. Initiate in child class.
+    size_t cRow;
+    size_t cCol;
 private:
     bool *lattice;
     size_t width;

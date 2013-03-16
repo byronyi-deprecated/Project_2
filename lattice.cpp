@@ -125,6 +125,7 @@ Lattice Lattice::moveDown()
     for(size_t i = 0; i < width; ++i)
         temp.lattice[i] = false;
 
+    ++cRow;
     return temp;
 }
 
@@ -142,6 +143,7 @@ Lattice Lattice::moveLeft()
     for(size_t i = 1; i != height; ++i)
         temp.lattice[i * width - 1] = false;
 
+    --cCol;
     return temp;
 }
 
@@ -159,6 +161,7 @@ Lattice Lattice::moveRight()
     for(size_t i = 0; i != height; ++i)
         temp.lattice[i * width + 1] = false;
 
+    ++cCol;
     return temp;
 }
 
@@ -175,4 +178,16 @@ void Lattice::elimNthRow(size_t nth_row)
     else
         std::cerr << "Given row is out of range" << std::endl;
     return;
+}
+//=========================================
+//Some comments on the virtuality:
+//This function is only meaningful in its
+//child class and should not be used by Lattice
+//object. However, since we still need
+//it to represent the base, this function is
+//not made to a pure virtual function on purpose.
+//=========================================
+Lattice Lattice::rotate()
+{
+    return *this;
 }
