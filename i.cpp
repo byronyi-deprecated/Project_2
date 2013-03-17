@@ -12,7 +12,7 @@ I::I(size_t width, size_t height) :
     cCol = 4;
 }
 
-Lattice& I::rotate()
+Lattice I::rotate()
 {
 
 }

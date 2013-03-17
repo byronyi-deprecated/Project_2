@@ -69,7 +69,7 @@ Lattice& Lattice::operator=(const Lattice &l)
 
 Lattice Lattice::operator+(const Lattice &l)
 {
-    if(width != l.width || height != width)
+    if(width != l.width || height != l.height)
     {
         std::cerr << "Two matrix with different shape cannot add up" << std::endl;
         return *this;
@@ -135,7 +135,7 @@ void Lattice::reset(const size_t& nth_row, const size_t& nth_col)
         std::cerr << "Given entry is out of range" << std::endl;
 }
 
-Lattice& Lattice::moveDown()
+Lattice Lattice::moveDown()
 {
     for(size_t i = 0; i != width; ++i)
         if(lattice[ (height - 1) * width + i ])
@@ -153,7 +153,7 @@ Lattice& Lattice::moveDown()
     return temp;
 }
 
-Lattice& Lattice::moveLeft()
+Lattice Lattice::moveLeft()
 {
     for(size_t i = 0; i != height; ++i)
         if(lattice[i * width])
@@ -171,7 +171,7 @@ Lattice& Lattice::moveLeft()
     return temp;
 }
 
-Lattice& Lattice::moveRight()
+Lattice Lattice::moveRight()
 {
     for(size_t i = 1; i != height; ++i)
         if(lattice[i * width - 1])
@@ -211,7 +211,7 @@ void Lattice::elimNthRow(size_t nth_row)
 //it to represent the base, this function is
 //not made to a pure virtual function on purpose.
 //=========================================
-Lattice& Lattice::rotate()
+Lattice Lattice::rotate()
 {
     return *this;
 }

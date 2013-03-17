@@ -8,7 +8,7 @@ O::O(size_t width, size_t height) : Lattice(width, height)
     set(1, 5);
 }
 
-Lattice& O::rotate()
+Lattice O::rotate()
 {
 
 }

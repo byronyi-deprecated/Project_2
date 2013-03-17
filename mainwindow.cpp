@@ -7,14 +7,22 @@ MainWindow::MainWindow(QWidget *parent)
     base = new Lattice(10, 20);
     timer = new QTimer(this);
     timer->setInterval(100);
+
     connect(this, SIGNAL(gameStart()),
             timer, SLOT(start()));
-//    connect(this, SIGNAL(gameStart()),
-//            this, SLOT(startNewGame()));
+    connect(this, SIGNAL(gameStart()),
+            this, SLOT(startNewGame()));
+
+    connect(timer, SIGNAL(timeout()),
+            this, SLOT(timeoutAction()));
+
     connect(this, SIGNAL(hitGround()),
             this, SLOT(nextRound()));
+
     connect(this, SIGNAL(gameOver()),
             timer, SLOT(stop()));
+    connect(this, SIGNAL(gameOver()),
+            this, SLOT(stopGame()));
 
     board = QImage(10, 20, QImage::Format_ARGB32);
     board.fill(Qt::white);
@@ -25,14 +33,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     setMinimumSize(360, 420);
     setMaximumSize(360, 420);
+
+    currentShape = 0;
+    nextShape = 0;
 }
 
 MainWindow::~MainWindow()
 {
-//    if(currentShape)
-//        delete currentShape;
-//    if(nextShape)
-//        delete nextShape;
+    if(currentShape)
+        delete currentShape;
+    if(nextShape)
+        delete nextShape;
     delete base;
     delete timer;
 }
@@ -77,22 +88,21 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     update();
 }
 
-void MainWindow::timerEvent(QTimerEvent *e)
+void MainWindow::timeoutAction()
 {
     if(currentShape->moveDown().isHit(base) ||
             *currentShape == currentShape->moveDown())
         emit hitGround();
     else
         *currentShape = currentShape->moveDown();
-
     update();
 }
 
 void MainWindow::paintEvent(QPaintEvent * /* e */)
 {
     temp = board;
-//    if(currentShape)
-//        currentShape->paintOnImage(temp);
+    if(currentShape)
+        currentShape->paintOnImage(temp);
 
     QPainter painter(this);
     painter.drawPixmap(gameBoard, background);
@@ -104,22 +114,35 @@ void MainWindow::paintEvent(QPaintEvent * /* e */)
 void MainWindow::startNewGame()
 {
     board.fill(Qt::white);
+    delete base;
+    base = new Lattice(10, 20);
+
     if(currentShape)
         delete currentShape;
     if(nextShape)
         delete nextShape;
     currentShape = newShape();
     nextShape = newShape();
+
     update();
 }
 
 void MainWindow::nextRound()
 {
+    *base = *base + *currentShape;
     currentShape->paintOnImage(board);
     delete currentShape;
 
     currentShape = nextShape;
     nextShape = newShape();
+
+    if(currentShape->isHit(base))
+        emit gameOver();
+}
+
+void MainWindow::stopGame()
+{
+
 }
 
 Lattice* MainWindow::newShape()

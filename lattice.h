@@ -24,10 +24,10 @@ public:
     {return lattice[nth_row * width + nth_column];}
     bool isHit(Lattice* const &a);    
 
-    Lattice& moveDown();
-    Lattice& moveLeft();
-    Lattice& moveRight();
-    virtual Lattice& rotate();
+    Lattice moveDown();
+    Lattice moveLeft();
+    Lattice moveRight();
+    virtual Lattice rotate();
     void elimNthRow(size_t nth_row);
 protected:
     void set(const size_t& nth_row, const size_t& nth_col);

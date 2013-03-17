@@ -21,19 +21,19 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
-    void keyPressEvent(QKeyEvent *);
-    void paintEvent(QPaintEvent *);
-    void timerEvent(QTimerEvent *);
 signals:
     void gameStart();
     void hitGround();
     void gameOver();
 private slots:
     void startNewGame();
+    void timeoutAction();
     void nextRound();
+    void stopGame();
     Lattice* newShape();
-private:
+private:    
+    void keyPressEvent(QKeyEvent *);
+    void paintEvent(QPaintEvent *);
     Lattice* base;
     Lattice* currentShape;
     Lattice* nextShape;
